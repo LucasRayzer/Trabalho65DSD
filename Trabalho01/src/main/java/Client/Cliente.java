@@ -46,7 +46,10 @@ public class Cliente {
     
     public static void inserirPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException{           
         writer.println("INSERT_PESSOA");    
-    
+        
+        System.out.println("1: Criar partipante\n2: Criar palestrante");
+        String escolha = reader.readLine();
+        
         System.out.println("Insira o CPF");
         String cpf = reader.readLine();
 	writer.println(cpf);
@@ -58,6 +61,27 @@ public class Cliente {
         System.out.println("Insira o endereço");
         String endereco = reader.readLine();
 	writer.println(endereco);
+        
+        if (escolha.equals("1")){
+            System.out.println("Entre com a inscrição");
+            String inscricao = reader.readLine();
+            
+            System.out.println("Deseja fazer uma contribuição? S/N");
+            String contribuir = reader.readLine();
+            if(contribuir.equalsIgnoreCase("S")){
+                System.out.println("Entre com o valor da contribuição");
+                String valorContribuição = reader.readLine();
+            }else{
+                contribuir = "N";
+                String valorContribuição = "00,00";
+            }
+        }else{
+            System.out.println("Entre com o título da palestra");
+            String titulo = reader.readLine();
+            
+            System.out.println("Entre com a descrição da palestra");
+            String descricao = reader.readLine();
+        }
         
         String response = server.readLine();
 	System.out.println(response);

@@ -10,11 +10,21 @@ package Classes;
  */
 public class Palestrante extends Pessoa{
     
+    private String titulo;
     private String conteudoPalestra;
 
-    public Palestrante(String conteudoPalestra, String cpf, String nome, String endereco) {
+    public Palestrante(String titulo, String conteudoPalestra, String cpf, String nome, String endereco) {
         super(cpf, nome, endereco);
+        this.titulo = titulo;
         this.conteudoPalestra = conteudoPalestra;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public String getConteudoPalestra() {
@@ -24,5 +34,4 @@ public class Palestrante extends Pessoa{
     public void setConteudoPalestra(String conteudoPalestra) {
         this.conteudoPalestra = conteudoPalestra;
     }
-    
 }
