@@ -1,41 +1,52 @@
 package Client;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-
-
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-/**
- *
- * @author 11835692974
- */
 public class Cliente {
+    public static void main(String[] args) {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));) {
+                    System.out.println("Informe o endereço do servidor");
+                    String ipServidor = reader.readLine();
+                    
+			while (true) {
+				System.out.println("Escolha a operação:");
+				
+				System.out.println("1: Inserir dados de pessoa");
 
-    public static void main(String[] args) throws IOException {
-
-        System.out.println("Criando conexão...");
-        try(Socket conn = new Socket("10.15.120.119", 80);){
-            System.out.println("Conectado!");
-            InputStream in = conn.getInputStream();
-            
-            byte[] dadosBrutos = new byte[1024];
-            int qtdBytesLidos = in.read(dadosBrutos);
-            while(qtdBytesLidos>= 0){
-                String dadosStr = new String(dadosBrutos, 0,qtdBytesLidos);
-                System.out.println(dadosStr);
-                qtdBytesLidos = in.read(dadosBrutos);
-                
-            }
-        }catch(UnknownHostException e){
-            System.out.println("Host não encontrado!");
-            e.printStackTrace();
-        }
-    }
+				String choiceStr = reader.readLine();
+				if (choiceStr.isBlank()) {
+					System.out.println("Opção inválida");
+					continue;
+				}
+				
+				int choice = Integer.parseInt(choiceStr);
+				
+				Socket socket = new Socket("ipServidor", 64000);
+				BufferedReader server = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+				
+				System.out.println("Conectado ao servidor.");
+				
+				switch (choice) {
+					case 1 -> inserirDados(server, reader, writer);
+					
+					default -> System.out.println("Opção inválida");
+				}
+				
+				socket.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
     
+    public static void inserirDados(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException{           
+        System.out.println("");
+        System.out.println("Inserir dados no servidor...");
+    }
 }
+
