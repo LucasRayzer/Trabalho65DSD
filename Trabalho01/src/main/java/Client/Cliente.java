@@ -45,7 +45,7 @@ public class Cliente {
 	}
     
     public static void inserirPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException{           
-        writer.println("INSERT_DEV");    
+        writer.println("INSERT_PESSOA");    
     
         System.out.println("Insira o CPF");
         String cpf = reader.readLine();
