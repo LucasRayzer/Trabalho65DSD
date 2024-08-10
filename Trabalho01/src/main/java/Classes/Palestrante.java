@@ -8,15 +8,15 @@ package Classes;
  *
  * @author 11941578900
  */
-public class Palestrante {
+public class Palestrante extends Pessoa{
     
     private String conteudoPalestra;
 
-    public Palestrante(String conteudoPalestra) {
+    public Palestrante(String conteudoPalestra, String cpf, String nome, String endereco) {
+        super(cpf, nome, endereco);
         this.conteudoPalestra = conteudoPalestra;
     }
 
-    
     public String getConteudoPalestra() {
         return conteudoPalestra;
     }
