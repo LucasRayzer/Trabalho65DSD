@@ -8,19 +8,21 @@ package Classes;
  *
  * @author 11941578900
  */
-public class Participante {
+public class Participante extends Pessoa{
     
+    private static int inscricaoCounter = 1;
+
     private int inscricao;
     private boolean contribuicao;
-    private double valorContribuicao;
+    private String valorContribuicao;
 
-    public Participante(int inscricao, boolean contribuicao, double valorContribuicao) {
-        this.inscricao = inscricao;
+    public Participante(boolean contribuicao, String valorContribuicao, String cpf, String nome, String endereco) {
+        super(cpf, nome, endereco);
+        this.inscricao = inscricaoCounter++;
         this.contribuicao = contribuicao;
         this.valorContribuicao = valorContribuicao;
     }
-    
-    
+
     
     public int getInscricao() {
         return inscricao;
@@ -38,11 +40,21 @@ public class Participante {
         this.contribuicao = contribuicao;
     }
 
-    public double getValorContribuicao() {
+    public static int getInscricaoCounter() {
+        return inscricaoCounter;
+    }
+
+    public static void setInscricaoCounter(int inscricaoCounter) {
+        Participante.inscricaoCounter = inscricaoCounter;
+    }
+
+    public String getValorContribuicao() {
         return valorContribuicao;
     }
 
-    public void setValorContribuicao(double valorContribuicao) {
+    public void setValorContribuicao(String valorContribuicao) {
         this.valorContribuicao = valorContribuicao;
     }
+
+  
 }

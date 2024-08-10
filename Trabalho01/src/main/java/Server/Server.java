@@ -1,6 +1,8 @@
 package Server;
 
 import Classes.Pessoa;
+import Classes.Participante;
+import Classes.Palestrante;
 import Classes.Turma;
 
 import java.io.BufferedReader;
@@ -12,7 +14,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server{
+public class Server {
     private static List<Pessoa> pessoas = new ArrayList<>();
     private static List<Turma> turmas = new ArrayList<>();
 
@@ -30,7 +32,8 @@ public class Server{
                     String operation;
                     while ((operation = reader.readLine()) != null) {
                         switch (operation) {
-                             //Cases
+                            case "INSERT_PESSOA" -> insertPessoa(reader, writer);
+                            // Outros casos para diferentes operações
 
                             default -> writer.println("Operação inválida!");
                         }
@@ -40,5 +43,54 @@ public class Server{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void insertPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+        String cpf = reader.readLine();
+
+       
+        Pessoa pessoaCpf = encontrarPessoaPeloCpf(cpf);
+        if (pessoaCpf != null) {
+            writer.println("Pessoa já cadastrada. Tente um novo CPF.");
+        } else {
+            String nome = reader.readLine();
+            String endereco = reader.readLine();
+            String tipoPessoa = reader.readLine();  
+
+            if ("1".equals(tipoPessoa)) {
+                
+                String inscricao = reader.readLine();
+                String contribuir = reader.readLine();
+                String valorContribuicao = reader.readLine();
+                Boolean contribuira = false;
+                   if(contribuir =="S"){
+                       contribuira = true; 
+                   }else contribuira=false;
+                Participante participante = new Participante(contribuira, valorContribuicao,  cpf, nome, endereco);
+                pessoas.add(participante);
+
+                writer.println("Participante inserido com sucesso!");
+            } else if ("2".equals(tipoPessoa)) {
+                
+                String titulo = reader.readLine();
+                String descricao = reader.readLine();
+
+                Palestrante palestrante = new Palestrante(cpf, nome, endereco, titulo, descricao);
+                pessoas.add(palestrante);
+
+                writer.println("Palestrante inserido com sucesso!");
+            } else {
+                writer.println("Opção inválida.");
+            }
+        }
+    }
+
+    private static Pessoa encontrarPessoaPeloCpf(String cpf) {
+        for (Pessoa pessoa : pessoas) {
+            if (pessoa.getCpf().equals(cpf)) {
+                return pessoa;
+            }
+        }
+        return null;
     }
 }
