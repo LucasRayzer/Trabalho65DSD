@@ -14,6 +14,14 @@ public class Participante {
     private boolean contribuicao;
     private double valorContribuicao;
 
+    public Participante(int inscricao, boolean contribuicao, double valorContribuicao) {
+        this.inscricao = inscricao;
+        this.contribuicao = contribuicao;
+        this.valorContribuicao = valorContribuicao;
+    }
+    
+    
+    
     public int getInscricao() {
         return inscricao;
     }

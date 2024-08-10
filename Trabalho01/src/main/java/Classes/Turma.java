@@ -16,7 +16,14 @@ public class Turma {
     private String descricao;
     private List<Pessoa> pessoas; 
 
+    public Turma(int codigo, String descricao, List<Pessoa> pessoas) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.pessoas = pessoas;
+    }
+
    
+    
     public int getCodigo() {
         return codigo;
     }

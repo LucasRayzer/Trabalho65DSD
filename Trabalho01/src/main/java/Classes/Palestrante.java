@@ -9,9 +9,14 @@ package Classes;
  * @author 11941578900
  */
 public class Palestrante {
-      private String conteudoPalestra;
+    
+    private String conteudoPalestra;
 
- 
+    public Palestrante(String conteudoPalestra) {
+        this.conteudoPalestra = conteudoPalestra;
+    }
+
+    
     public String getConteudoPalestra() {
         return conteudoPalestra;
     }
@@ -19,4 +24,5 @@ public class Palestrante {
     public void setConteudoPalestra(String conteudoPalestra) {
         this.conteudoPalestra = conteudoPalestra;
     }
+    
 }
