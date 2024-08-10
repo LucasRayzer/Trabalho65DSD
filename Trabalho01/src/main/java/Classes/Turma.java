@@ -4,10 +4,40 @@
  */
 package Classes;
 
+import java.util.List;
+
 /**
  *
  * @author 11941578900
  */
 public class Turma {
     
+     private int codigo;
+    private String descricao;
+    private List<Pessoa> pessoas; 
+
+   
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public List<Pessoa> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
 }

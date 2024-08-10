@@ -10,4 +10,31 @@ package Classes;
  */
 public class Participante {
     
+    private int inscricao;
+    private boolean contribuicao;
+    private double valorContribuicao;
+
+    public int getInscricao() {
+        return inscricao;
+    }
+
+    public void setInscricao(int inscricao) {
+        this.inscricao = inscricao;
+    }
+
+    public boolean isContribuicao() {
+        return contribuicao;
+    }
+
+    public void setContribuicao(boolean contribuicao) {
+        this.contribuicao = contribuicao;
+    }
+
+    public double getValorContribuicao() {
+        return valorContribuicao;
+    }
+
+    public void setValorContribuicao(double valorContribuicao) {
+        this.valorContribuicao = valorContribuicao;
+    }
 }

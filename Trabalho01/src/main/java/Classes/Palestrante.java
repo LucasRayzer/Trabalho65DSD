@@ -9,5 +9,14 @@ package Classes;
  * @author 11941578900
  */
 public class Palestrante {
-    
+      private String conteudoPalestra;
+
+ 
+    public String getConteudoPalestra() {
+        return conteudoPalestra;
+    }
+
+    public void setConteudoPalestra(String conteudoPalestra) {
+        this.conteudoPalestra = conteudoPalestra;
+    }
 }
