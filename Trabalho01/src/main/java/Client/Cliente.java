@@ -32,7 +32,7 @@ public class Cliente {
 				System.out.println("Conectado ao servidor.");
 				
 				switch (choice) {
-					case 1 -> inserirDados(server, reader, writer);
+					case 1 -> inserirPessoa(server, reader, writer);
 					
 					default -> System.out.println("Opção inválida");
 				}
@@ -44,9 +44,23 @@ public class Cliente {
 		}
 	}
     
-    public static void inserirDados(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException{           
-        System.out.println("");
-        System.out.println("Inserir dados no servidor...");
+    public static void inserirPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException{           
+        writer.println("INSERT_DEV");    
+    
+        System.out.println("Insira o CPF");
+        String cpf = reader.readLine();
+	writer.println(cpf);
+        
+        System.out.println("Insira o nome");
+        String nome = reader.readLine();
+	writer.println(nome);
+        
+        System.out.println("Insira o endereço");
+        String endereco = reader.readLine();
+	writer.println(endereco);
+        
+        String response = server.readLine();
+	System.out.println(response);
     }
 }
 
