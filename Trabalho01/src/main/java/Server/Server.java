@@ -1,4 +1,4 @@
-package Servidor;
+package Server;
 
 import Classes.Pessoa;
 import Classes.Turma;
