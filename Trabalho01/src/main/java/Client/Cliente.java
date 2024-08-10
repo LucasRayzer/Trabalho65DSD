@@ -25,7 +25,7 @@ public class Cliente {
 				
 				int choice = Integer.parseInt(choiceStr);
 				
-				Socket socket = new Socket("ipServidor", 64000);
+				Socket socket = new Socket(ipServidor, 80);
 				BufferedReader server = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 				
