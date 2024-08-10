@@ -33,7 +33,7 @@ public class Server {
                     while ((operation = reader.readLine()) != null) {
                         switch (operation) {
                             case "INSERT_PESSOA" -> insertPessoa(reader, writer);
-                            // Outros casos para diferentes operações
+                            case "UPDATE" -> updatePessoa(reader, writer);
 
                             default -> writer.println("Operação inválida!");
                         }
@@ -84,6 +84,24 @@ public class Server {
             }
         }
     }
+    private static void updatePessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+        String cpf = reader.readLine();
+
+        Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
+        if (pessoa != null) {
+            String nome = reader.readLine();
+            String endereco = reader.readLine();
+
+            //Atualização
+            pessoa.setNome(nome);
+            pessoa.setEndereco(endereco);
+
+            writer.println("Pessoa atualizada com sucesso!");
+        } else {
+            writer.println("Pessoa não encontrada.");
+        }
+    }
+
 
     private static Pessoa encontrarPessoaPeloCpf(String cpf) {
         for (Pessoa pessoa : pessoas) {
