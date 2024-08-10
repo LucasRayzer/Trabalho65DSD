@@ -31,11 +31,15 @@ public class Server {
 
                     String operation;
                     while ((operation = reader.readLine()) != null) {
+                        System.out.println("Operação recebida: " + operation); 
+
                         switch (operation) {
                             case "INSERT_PESSOA" -> insertPessoa(reader, writer);
                             case "UPDATE" -> updatePessoa(reader, writer);
 
-                            default -> writer.println("Operação inválida!");
+                            default -> {writer.println("Operação inválida!");
+                            System.out.println("Operação inválida recebida"); 
+                            }
                         }
                     }
                 }
@@ -48,10 +52,12 @@ public class Server {
     private static void insertPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
 
+        System.out.println("Tentando inserir pessoa com CPF: " + cpf);
        
         Pessoa pessoaCpf = encontrarPessoaPeloCpf(cpf);
         if (pessoaCpf != null) {
             writer.println("Pessoa já cadastrada. Tente um novo CPF.");
+            System.out.println("Pessoa com CPF " + cpf + " já está cadastrada."); 
         } else {
             String nome = reader.readLine();
             String endereco = reader.readLine();
@@ -70,6 +76,7 @@ public class Server {
                 pessoas.add(participante);
 
                 writer.println("Participante inserido com sucesso!");
+                System.out.println("Participante inserido: " + participante); 
             } else if ("2".equals(tipoPessoa)) {
                 
                 String titulo = reader.readLine();
@@ -79,13 +86,16 @@ public class Server {
                 pessoas.add(palestrante);
 
                 writer.println("Palestrante inserido com sucesso!");
+                System.out.println("Palestrante inserido: " + palestrante);
             } else {
                 writer.println("Opção inválida.");
+                System.out.println("Tipo de pessoa inválido recebido: " + tipoPessoa);
             }
         }
     }
     private static void updatePessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
+        System.out.println("Tentando atualizar pessoa com CPF: " + cpf); 
 
         Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
         if (pessoa != null) {
@@ -97,8 +107,11 @@ public class Server {
             pessoa.setEndereco(endereco);
 
             writer.println("Pessoa atualizada com sucesso!");
+            System.out.println("Pessoa atualizada: " + pessoa); 
         } else {
             writer.println("Pessoa não encontrada.");
+            System.out.println("Pessoa com CPF " + cpf + " não encontrada.");
+
         }
     }
 
