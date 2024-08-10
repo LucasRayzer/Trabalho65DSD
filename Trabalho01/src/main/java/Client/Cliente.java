@@ -86,5 +86,24 @@ public class Cliente {
         String response = server.readLine();
 	System.out.println(response);
     }
+    public static void atualizarPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("UPDATE");
+
+        System.out.println("Insira o CPF da pessoa que deseja atualizar:");
+        String cpf = reader.readLine();
+        writer.println(cpf);
+
+        System.out.println("Insira o novo nome:");
+        String nome = reader.readLine();
+        writer.println(nome);
+
+        System.out.println("Insira o novo endereço:");
+        String endereco = reader.readLine();
+        writer.println(endereco);
+
+        //Aqui é onde vai vir a resposta do servidor
+        String response = server.readLine();
+        System.out.println(response);
+    }
 }
 
