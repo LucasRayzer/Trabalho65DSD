@@ -71,8 +71,11 @@ public class Cliente {
             if(contribuir.equalsIgnoreCase("S")){
                 System.out.println("Entre com o valor da contribuição");
                 String valorContribuição = reader.readLine();
+                
+                
             }else{
                 contribuir = "N";
+            
                 String valorContribuição = "00,00";
             }
         }else{
