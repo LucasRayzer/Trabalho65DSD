@@ -7,92 +7,99 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Cliente {
+
     public static void main(String[] args) {
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));) {
-                    System.out.println("Informe o endereço do servidor");
-                    String ipServidor = reader.readLine();
-                    
-			while (true) {
-				System.out.println("Escolha a operação:");
-				
-				System.out.println("1: Inserir dados de pessoa");
-				System.out.println("2: Atualizar dados de pessoa");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));) {
+            System.out.println("Informe o endereço do servidor");
+            String ipServidor = reader.readLine();
+
+            while (true) {
+                System.out.println("Escolha a operação:");
+
+                System.out.println("1: Inserir dados de pessoa");
+                System.out.println("2: Atualizar dados de pessoa");
                 System.out.println("3: Obter dados de pessoa");
                 System.out.println("4: Remover pessoa");
                 System.out.println("5: Listar todas as pessoas");
-                
-				String choiceStr = reader.readLine();
-				if (choiceStr.isBlank()) {
-					System.out.println("Opção inválida");
-					continue;
-				}
-				
-				int choice = Integer.parseInt(choiceStr);
-				
-				Socket socket = new Socket(ipServidor, 80);
-				BufferedReader server = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-				
-				System.out.println("Conectado ao servidor.");
-				
-				switch (choice) {
-					case 1 -> inserirPessoa(server, reader, writer);
-					case 2 -> atualizarPessoa(server, reader, writer);
-	                case 3 -> obterPessoa(server, reader, writer);
-	                case 4 -> removerPessoa(server, reader, writer);
-	                case 5 -> listarPessoas(server, writer);
-	                default -> System.out.println("Opção inválida");
-				}
-				
-				socket.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-    
-    public static void inserirPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException{           
-        writer.println("INSERT_PESSOA");    
-        
-        System.out.println("1: Criar partipante\n2: Criar palestrante");
-        String escolha = reader.readLine();
+
+                String choiceStr = reader.readLine();
+                if (choiceStr.isBlank()) {
+                    System.out.println("Opção inválida");
+                    continue;
+                }
+
+                int choice = Integer.parseInt(choiceStr);
+
+                Socket socket = new Socket(ipServidor, 80);
+                BufferedReader server = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+
+                System.out.println("Conectado ao servidor.");
+
+                switch (choice) {
+                    case 1 ->
+                        inserirPessoa(server, reader, writer);
+                    case 2 ->
+                        atualizarPessoa(server, reader, writer);
+                    case 3 ->
+                        obterPessoa(server, reader, writer);
+                    case 4 ->
+                        removerPessoa(server, reader, writer);
+                    case 5 ->
+                        listarPessoas(server, writer);
+                    default ->
+                        System.out.println("Opção inválida");
+                }
+
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void inserirPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("INSERT_PESSOA");
+
+        boolean continuar = true;
+        String escolha = "";
+        while (continuar) {
+            System.out.println("1: Criar partipante\n2: Criar palestrante");
+            escolha = reader.readLine();
+            if (escolha.equals("1") || escolha.endsWith("2")) {
+                continuar = false;
+                writer.println(escolha);
+            }else{
+                System.out.println("Escolha uma das opções cadastradas.");
+            }
+        }
         
         System.out.println("Insira o CPF");
         String cpf = reader.readLine();
-	writer.println(cpf);
-        
+        writer.println(cpf);
+
         System.out.println("Insira o nome");
         String nome = reader.readLine();
-	writer.println(nome);
-        
+        writer.println(nome);
+
         System.out.println("Insira o endereço");
         String endereco = reader.readLine();
-	writer.println(endereco);
-        
-        if (escolha.equals("1")){
-            System.out.println("Entre com a inscrição");
-            String inscricao = reader.readLine();
-            
-            System.out.println("Deseja fazer uma contribuição? S/N");
-            String contribuir = reader.readLine();
-            if(contribuir.equalsIgnoreCase("S")){
-                System.out.println("Entre com o valor da contribuição");
-                String valorContribuição = reader.readLine();                          
-            }else{
-                contribuir = "N";
-                String valorContribuição = "00,00";
-            }
-        }else{
+        writer.println(endereco);
+
+        if (escolha.equals("1")) {
+            System.out.println("Entre com o valor da contribuição");
+            String valorContribuição = reader.readLine();
+            writer.println(valorContribuição);
+        } else {
             System.out.println("Entre com o título da palestra");
             String titulo = reader.readLine();
-            
-            System.out.println("Entre com a descrição da palestra");
-            String descricao = reader.readLine();
+            writer.println(titulo);
         }
-        
+
         String response = server.readLine();
         System.out.println(response);
     }
+
     public static void atualizarPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("UPDATE");
 
@@ -112,6 +119,7 @@ public class Cliente {
         String response = server.readLine();
         System.out.println(response);
     }
+
     public static void obterPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("GET");
 
@@ -122,6 +130,7 @@ public class Cliente {
         String response = server.readLine();
         System.out.println(response);
     }
+
     public static void removerPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("DELETE");
 
@@ -132,10 +141,11 @@ public class Cliente {
         String response = server.readLine();
         System.out.println(response);
     }
+
     public static void listarPessoas(BufferedReader server, PrintWriter writer) throws IOException {
         writer.println("LIST");
         //quantidade de registros
-        String response = server.readLine(); 
+        String response = server.readLine();
         int quantidade = Integer.parseInt(response);
 
         if (quantidade == 0) {
@@ -149,4 +159,3 @@ public class Cliente {
         }
     }
 }
-

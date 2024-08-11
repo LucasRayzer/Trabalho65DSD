@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
+
     private static List<Pessoa> pessoas = new ArrayList<>();
     private static List<Turma> turmas = new ArrayList<>();
 
@@ -26,22 +27,27 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 System.out.println("Cliente conectado: " + socket.getInetAddress());
 
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                     PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream())); PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
 
                     String operation;
                     while ((operation = reader.readLine()) != null) {
-                        System.out.println("Operação recebida: " + operation); 
+                        System.out.println("Operação recebida: " + operation);
 
                         switch (operation) {
-                            case "INSERT_PESSOA" -> insertPessoa(reader, writer);
-                            case "UPDATE" -> updatePessoa(reader, writer);
-                            case "GET" -> getPessoa(reader, writer);
-                            case "DELETE" -> deletePessoa(reader, writer);
-                            case "LIST" -> listPessoas(reader, writer);
-                            
-                            default -> {writer.println("Operação inválida!");
-                            System.out.println("Operação inválida recebida"); 
+                            case "INSERT_PESSOA" ->
+                                insertPessoa(reader, writer);
+                            case "UPDATE" ->
+                                updatePessoa(reader, writer);
+                            case "GET" ->
+                                getPessoa(reader, writer);
+                            case "DELETE" ->
+                                deletePessoa(reader, writer);
+                            case "LIST" ->
+                                listPessoas(reader, writer);
+
+                            default -> {
+                                writer.println("Operação inválida!");
+                                System.out.println("Operação inválida recebida");
                             }
                         }
                     }
@@ -53,49 +59,39 @@ public class Server {
     }
 
     private static void insertPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+        String escolha = reader.readLine();
+        System.out.println("Tipo de pessoa selecionado: " + escolha);
+
         String cpf = reader.readLine();
+        System.out.println("CPF cadastrado: " + cpf);
 
-        System.out.println("Tentando inserir pessoa com CPF: " + cpf);
-       
-        Pessoa pessoaCpf = encontrarPessoaPeloCpf(cpf);
-        if (pessoaCpf != null) {
-            writer.println("Pessoa já cadastrada. Tente um novo CPF.");
-            System.out.println("Pessoa com CPF " + cpf + " já está cadastrada."); 
+        String nome = reader.readLine();
+        System.out.println("Nome cadastrado: " + nome);
+
+        String endereco = reader.readLine();
+        System.out.println("Endereço cadastrado: " + endereco);
+
+        if (escolha.equals("1")) {
+            String valorContribuicao = reader.readLine();
+            System.out.println("Valor da contribuição: " + valorContribuicao);
+            Participante participante = new Participante(valorContribuicao, cpf, nome, endereco);
+            pessoas.add(participante);
+            writer.println("Participante inserido com sucesso!");
+            System.out.println("Participante inserido: " + participante);
         } else {
-            String nome = reader.readLine();
-            String endereco = reader.readLine();
-            String tipoPessoa = reader.readLine();  
+            String titulo = reader.readLine();
 
-            if ("1".equals(tipoPessoa)) {
-                String contribuir = reader.readLine();
-                String valorContribuicao = reader.readLine();
-                Boolean contribuira = false;
-                   if(contribuir =="S"){
-                       contribuira = true; 
-                   }else contribuira=false;
-                Participante participante = new Participante(contribuira, valorContribuicao,  cpf, nome, endereco);
-                pessoas.add(participante);
+            Palestrante palestrante = new Palestrante(cpf, nome, endereco, titulo);
+            pessoas.add(palestrante);
 
-                writer.println("Participante inserido com sucesso!");
-                System.out.println("Participante inserido: " + participante); 
-            } else if ("2".equals(tipoPessoa)) {  
-                String titulo = reader.readLine();
-                String descricao = reader.readLine();
-
-                Palestrante palestrante = new Palestrante(cpf, nome, endereco, titulo, descricao);
-                pessoas.add(palestrante);
-
-                writer.println("Palestrante inserido com sucesso!");
-                System.out.println("Palestrante inserido: " + palestrante);
-            } else {
-                writer.println("Opção inválida.");
-                System.out.println("Tipo de pessoa inválido recebido: " + tipoPessoa);
-            }
+            writer.println("Palestrante inserido com sucesso!");
+            System.out.println("Palestrante inserido: " + palestrante);
         }
     }
+
     private static void updatePessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
-        System.out.println("Tentando atualizar pessoa com CPF: " + cpf); 
+        System.out.println("Tentando atualizar pessoa com CPF: " + cpf);
 
         Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
         if (pessoa != null) {
@@ -107,13 +103,14 @@ public class Server {
             pessoa.setEndereco(endereco);
 
             writer.println("Pessoa atualizada com sucesso!");
-            System.out.println("Pessoa atualizada: " + pessoa); 
+            System.out.println("Pessoa atualizada: " + pessoa);
         } else {
             writer.println("Pessoa não encontrada.");
             System.out.println("Pessoa com CPF " + cpf + " não encontrada.");
 
         }
     }
+
     private static void getPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
         System.out.println("Tentando obter pessoa com CPF: " + cpf);
@@ -133,6 +130,7 @@ public class Server {
             System.out.println("Pessoa com CPF " + cpf + " não encontrada.");
         }
     }
+
     private static void deletePessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
         System.out.println("Tentando remover pessoa com CPF: " + cpf);
@@ -153,21 +151,21 @@ public class Server {
             System.out.println("Pessoa com CPF " + cpf + " não encontrada.");
         }
     }
+
     private static void listPessoas(BufferedReader reader, PrintWriter writer) throws IOException {
         if (pessoas.isEmpty()) {
-            writer.println("0"); 
+            writer.println("0");
             System.out.println("Nenhuma pessoa cadastrada.");
             return;
         }
 
-        writer.println(pessoas.size()); 
+        writer.println(pessoas.size());
 
         for (Pessoa pessoa : pessoas) {
             writer.println(pessoa.getCpf() + ";" + pessoa.getNome() + ";" + pessoa.getEndereco());
             System.out.println("Enviando dados: " + pessoa);
         }
     }
-
 
     private static Pessoa encontrarPessoaPeloCpf(String cpf) {
         for (Pessoa pessoa : pessoas) {

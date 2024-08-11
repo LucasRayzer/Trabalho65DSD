@@ -1,18 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Classes;
 
 import java.util.List;
 
-/**
- *
- * @author 11941578900
- */
 public class Turma {
     
-     private int codigo;
+    private int codigo;
     private String descricao;
     private List<Pessoa> pessoas; 
 
@@ -44,5 +36,10 @@ public class Turma {
 
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
+    }
+
+    @Override
+    public String toString() {
+        return "Turma{" + "codigo=" + codigo + ", descricao=" + descricao + ", pessoas=" + pessoas + '}';
     }
 }
