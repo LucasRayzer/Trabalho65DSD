@@ -16,7 +16,11 @@ public class Cliente {
 				System.out.println("Escolha a operação:");
 				
 				System.out.println("1: Inserir dados de pessoa");
-
+				System.out.println("2: Atualizar dados de pessoa");
+                System.out.println("3: Obter dados de pessoa");
+                System.out.println("4: Remover pessoa");
+                System.out.println("5: Listar todas as pessoas");
+                
 				String choiceStr = reader.readLine();
 				if (choiceStr.isBlank()) {
 					System.out.println("Opção inválida");
@@ -33,8 +37,11 @@ public class Cliente {
 				
 				switch (choice) {
 					case 1 -> inserirPessoa(server, reader, writer);
-					
-					default -> System.out.println("Opção inválida");
+					case 2 -> atualizarPessoa(server, reader, writer);
+	                case 3 -> obterPessoa(server, reader, writer);
+	                case 4 -> removerPessoa(server, reader, writer);
+	                case 5 -> listarPessoas(server, writer);
+	                default -> System.out.println("Opção inválida");
 				}
 				
 				socket.close();
@@ -84,7 +91,7 @@ public class Cliente {
         }
         
         String response = server.readLine();
-	System.out.println(response);
+        System.out.println(response);
     }
     public static void atualizarPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("UPDATE");
@@ -104,6 +111,42 @@ public class Cliente {
         //Aqui é onde vai vir a resposta do servidor
         String response = server.readLine();
         System.out.println(response);
+    }
+    public static void obterPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("GET");
+
+        System.out.println("Insira o CPF da pessoa que deseja obter os dados:");
+        String cpf = reader.readLine();
+        writer.println(cpf);
+
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    public static void removerPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("DELETE");
+
+        System.out.println("Insira o CPF da pessoa que deseja remover:");
+        String cpf = reader.readLine();
+        writer.println(cpf);
+
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    public static void listarPessoas(BufferedReader server, PrintWriter writer) throws IOException {
+        writer.println("LIST");
+        //quantidade de registros
+        String response = server.readLine(); 
+        int quantidade = Integer.parseInt(response);
+
+        if (quantidade == 0) {
+            System.out.println("Nenhuma pessoa cadastrada.");
+        } else {
+            System.out.println("Quantidade de registros: " + quantidade);
+            for (int i = 0; i < quantidade; i++) {
+                String pessoa = server.readLine();
+                System.out.println(pessoa);
+            }
+        }
     }
 }
 

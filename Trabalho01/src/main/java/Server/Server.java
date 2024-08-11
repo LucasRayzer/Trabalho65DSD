@@ -36,7 +36,10 @@ public class Server {
                         switch (operation) {
                             case "INSERT_PESSOA" -> insertPessoa(reader, writer);
                             case "UPDATE" -> updatePessoa(reader, writer);
-
+                            case "GET" -> getPessoa(reader, writer);
+                            case "DELETE" -> deletePessoa(reader, writer);
+                            case "LIST" -> listPessoas(reader, writer);
+                            
                             default -> {writer.println("Operação inválida!");
                             System.out.println("Operação inválida recebida"); 
                             }
@@ -64,8 +67,6 @@ public class Server {
             String tipoPessoa = reader.readLine();  
 
             if ("1".equals(tipoPessoa)) {
-                
-                String inscricao = reader.readLine();
                 String contribuir = reader.readLine();
                 String valorContribuicao = reader.readLine();
                 Boolean contribuira = false;
@@ -77,8 +78,7 @@ public class Server {
 
                 writer.println("Participante inserido com sucesso!");
                 System.out.println("Participante inserido: " + participante); 
-            } else if ("2".equals(tipoPessoa)) {
-                
+            } else if ("2".equals(tipoPessoa)) {  
                 String titulo = reader.readLine();
                 String descricao = reader.readLine();
 
@@ -112,6 +112,59 @@ public class Server {
             writer.println("Pessoa não encontrada.");
             System.out.println("Pessoa com CPF " + cpf + " não encontrada.");
 
+        }
+    }
+    private static void getPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+        String cpf = reader.readLine();
+        System.out.println("Tentando obter pessoa com CPF: " + cpf);
+
+        if (pessoas.isEmpty()) {
+            writer.println("Sem pessoas cadastradas");
+            System.out.println("Nenhuma pessoa cadastrada.");
+            return;
+        }
+
+        Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
+        if (pessoa != null) {
+            writer.println(pessoa.getCpf() + ";" + pessoa.getNome() + ";" + pessoa.getEndereco());
+            System.out.println("Dados da pessoa enviados: " + pessoa);
+        } else {
+            writer.println("Pessoa não encontrada");
+            System.out.println("Pessoa com CPF " + cpf + " não encontrada.");
+        }
+    }
+    private static void deletePessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+        String cpf = reader.readLine();
+        System.out.println("Tentando remover pessoa com CPF: " + cpf);
+
+        if (pessoas.isEmpty()) {
+            writer.println("Sem pessoas cadastradas");
+            System.out.println("Nenhuma pessoa cadastrada.");
+            return;
+        }
+
+        Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
+        if (pessoa != null) {
+            pessoas.remove(pessoa);
+            writer.println("Pessoa removida com sucesso");
+            System.out.println("Pessoa removida: " + pessoa);
+        } else {
+            writer.println("Pessoa não encontrada");
+            System.out.println("Pessoa com CPF " + cpf + " não encontrada.");
+        }
+    }
+    private static void listPessoas(BufferedReader reader, PrintWriter writer) throws IOException {
+        if (pessoas.isEmpty()) {
+            writer.println("0"); 
+            System.out.println("Nenhuma pessoa cadastrada.");
+            return;
+        }
+
+        writer.println(pessoas.size()); 
+
+        for (Pessoa pessoa : pessoas) {
+            writer.println(pessoa.getCpf() + ";" + pessoa.getNome() + ";" + pessoa.getEndereco());
+            System.out.println("Enviando dados: " + pessoa);
         }
     }
 

@@ -21,8 +21,6 @@ public class Turma {
         this.descricao = descricao;
         this.pessoas = pessoas;
     }
-
-   
     
     public int getCodigo() {
         return codigo;
