@@ -22,7 +22,6 @@ public class Participante extends Pessoa{
         this.contribuicao = contribuicao;
         this.valorContribuicao = valorContribuicao;
     }
-
     
     public int getInscricao() {
         return inscricao;
@@ -55,6 +54,4 @@ public class Participante extends Pessoa{
     public void setValorContribuicao(String valorContribuicao) {
         this.valorContribuicao = valorContribuicao;
     }
-
-  
 }
