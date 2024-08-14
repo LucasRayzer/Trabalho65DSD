@@ -21,7 +21,14 @@ public class Cliente {
                 System.out.println("3: Obter dados de pessoa");
                 System.out.println("4: Remover pessoa");
                 System.out.println("5: Listar todas as pessoas");
-
+                System.out.println("6: Criar nova turma");
+                System.out.println("7: Atualizar dados de turma");
+                System.out.println("8: Obter dados de turma");
+                System.out.println("9: Remover turma");
+                System.out.println("10: Retornar todas as turma");
+                System.out.println("11: Adicionar participante a turma");
+                System.out.println("12: Remover participante da turma");
+                
                 String choiceStr = reader.readLine();
                 if (choiceStr.isBlank()) {
                     System.out.println("Opção inválida");
@@ -47,6 +54,20 @@ public class Cliente {
                         removerPessoa(server, reader, writer);
                     case 5 ->
                         listarPessoas(server, writer);
+                    case 6 ->
+                        adicionarTurma(server, reader, writer);
+                    case 7 ->
+                        editarTurma(server, reader, writer);
+                    case 8 ->
+                        buscarTurma(server, reader, writer); 
+                    case 9 ->
+                        removerTurma(server, reader, writer);  
+                    case 10 ->
+                        buscarTodasTurma(server, writer);
+                    case 11 ->
+                        adicionarPessoaTurma(server, reader, writer);
+                    case 12 ->
+                        removerPessoaTurma(server, reader, writer);
                     default ->
                         System.out.println("Opção inválida");
                 }
@@ -101,7 +122,7 @@ public class Cliente {
     }
 
     public static void atualizarPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
-        writer.println("UPDATE");
+        writer.println("UPDATE_PESSOA");
 
         System.out.println("Insira o CPF da pessoa que deseja atualizar:");
         String cpf = reader.readLine();
@@ -121,7 +142,7 @@ public class Cliente {
     }
 
     public static void obterPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
-        writer.println("GET");
+        writer.println("GET_PESSOA");
 
         System.out.println("Insira o CPF da pessoa que deseja obter os dados:");
         String cpf = reader.readLine();
@@ -132,7 +153,7 @@ public class Cliente {
     }
 
     public static void removerPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
-        writer.println("DELETE");
+        writer.println("DELETE_PESSOA");
 
         System.out.println("Insira o CPF da pessoa que deseja remover:");
         String cpf = reader.readLine();
@@ -143,7 +164,7 @@ public class Cliente {
     }
 
     public static void listarPessoas(BufferedReader server, PrintWriter writer) throws IOException {
-        writer.println("LIST");
+        writer.println("LIST_PESSOA");
         //quantidade de registros
         String response = server.readLine();
         int quantidade = Integer.parseInt(response);
@@ -157,5 +178,90 @@ public class Cliente {
                 System.out.println(pessoa);
             }
         }
+    }
+    
+    public static void adicionarTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("INSERT_TURMA");
+
+        System.out.println("Entre com a descrição da turma");
+        String descricao = reader.readLine();
+        writer.println(descricao);
+        
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    
+    public static void removerTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("DELETE_TURMA");
+
+        System.out.println("Entre com o código da turma");
+        String codigo = reader.readLine();
+        writer.println(codigo);
+        
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    
+    public static void editarTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("UPDATE_TURMA");
+
+        System.out.println("Entre com o código da turma");
+        String codigo = reader.readLine();
+        writer.println(codigo);
+        
+        System.out.println("Atualize a descrição da turma");
+        String descricao = reader.readLine();
+        writer.println(descricao);
+        
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    
+    public static void buscarTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("GET_TURMA");
+
+        System.out.println("Entre com o código da turma");
+        String codigo = reader.readLine();
+        writer.println(codigo);
+
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    
+    public static void buscarTodasTurma( BufferedReader server, PrintWriter writer) throws IOException {
+        writer.println("LIST_TURMA");
+        
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    
+    public static void adicionarPessoaTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("INSERT_PESSOA_TURMA");
+        
+        System.out.println("Entre com o código da turma");
+        String codigo = reader.readLine();
+        writer.println(codigo);
+        
+        System.out.println("Entre com o CPF da pessoa");
+        String cpf = reader.readLine();
+        writer.println(cpf);
+        
+        String response = server.readLine();
+        System.out.println(response);
+    }
+    
+    public static void removerPessoaTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("REMOVE_PESSOA_TURMA");
+        
+        System.out.println("Entre com o código da turma");
+        String codigo = reader.readLine();
+        writer.println(codigo);
+        
+        System.out.println("Entre com o CPF da pessoa");
+        String cpf = reader.readLine();
+        writer.println(cpf);
+        
+        String response = server.readLine();
+        System.out.println(response);
     }
 }

@@ -8,10 +8,16 @@ public class Turma {
     private String descricao;
     private List<Pessoa> pessoas; 
 
-    public Turma(int codigo, String descricao, List<Pessoa> pessoas) {
-        this.codigo = codigo;
+    public Turma(String descricao) {
         this.descricao = descricao;
-        this.pessoas = pessoas;
+    }
+    
+    public void addPessoa(Pessoa p){
+        pessoas.add(p);
+    }
+    
+    public void removePessoa(Pessoa p){
+        pessoas.remove(p);
     }
     
     public int getCodigo() {

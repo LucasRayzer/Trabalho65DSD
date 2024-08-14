@@ -35,15 +35,29 @@ public class Server {
 
                         switch (operation) {
                             case "INSERT_PESSOA" ->
-                                insertPessoa(reader, writer);
-                            case "UPDATE" ->
-                                updatePessoa(reader, writer);
-                            case "GET" ->
-                                getPessoa(reader, writer);
-                            case "DELETE" ->
-                                deletePessoa(reader, writer);
-                            case "LIST" ->
-                                listPessoas(reader, writer);
+                                inserirPessoa(reader, writer);
+                            case "UPDATE_PESSOA" ->
+                                atualizarPessoa(reader, writer);
+                            case "GET_PESSOA" ->
+                                obterPessoa(reader, writer);
+                            case "DELETE_PESSOA" ->
+                                removerPessoa(reader, writer);
+                            case "LIST_PESSOA" ->
+                                listarPessoas(reader, writer);
+                            case "INSERT_TURMA" ->
+                                adicionarTurma(reader, writer);
+                            case "UPDATE_TURMA" ->
+                                editarTurma(reader, writer);
+                            case "GET_TURMA" ->
+                                buscarTurma(reader, writer);
+                            case "REMOVE_TURMA" ->
+                                removerTurma(reader, writer);
+                            case "LIST_TURMA" ->
+                                buscarTodasTurma(writer);
+                            case "INSERT_PESSOA_TURMA" ->
+                                adicionarPessoaTurma(reader, writer);
+                            case "REMOVE_PESSOA_TURMA" ->
+                                removerPessoaTurma(reader, writer);
 
                             default -> {
                                 writer.println("Operação inválida!");
@@ -58,7 +72,7 @@ public class Server {
         }
     }
 
-    private static void insertPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+    private static void inserirPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String escolha = reader.readLine();
         System.out.println("Tipo de pessoa selecionado: " + escolha);
 
@@ -89,7 +103,7 @@ public class Server {
         }
     }
 
-    private static void updatePessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+    private static void atualizarPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
         System.out.println("Tentando atualizar pessoa com CPF: " + cpf);
 
@@ -111,7 +125,7 @@ public class Server {
         }
     }
 
-    private static void getPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+    private static void obterPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
         System.out.println("Tentando obter pessoa com CPF: " + cpf);
 
@@ -131,7 +145,7 @@ public class Server {
         }
     }
 
-    private static void deletePessoa(BufferedReader reader, PrintWriter writer) throws IOException {
+    private static void removerPessoa(BufferedReader reader, PrintWriter writer) throws IOException {
         String cpf = reader.readLine();
         System.out.println("Tentando remover pessoa com CPF: " + cpf);
 
@@ -152,7 +166,7 @@ public class Server {
         }
     }
 
-    private static void listPessoas(BufferedReader reader, PrintWriter writer) throws IOException {
+    private static void listarPessoas(BufferedReader reader, PrintWriter writer) throws IOException {
         if (pessoas.isEmpty()) {
             writer.println("0");
             System.out.println("Nenhuma pessoa cadastrada.");
@@ -171,6 +185,105 @@ public class Server {
         for (Pessoa pessoa : pessoas) {
             if (pessoa.getCpf().equals(cpf)) {
                 return pessoa;
+            }
+        }
+        return null;
+    }
+    
+    private static void adicionarTurma(BufferedReader reader, PrintWriter writer) throws IOException{
+        String descricao = reader.readLine();
+        Turma turma = new Turma(descricao);
+        
+        turmas.add(turma);
+        
+        writer.println("Turma adicionada com sucesso!");
+        System.out.println("Turma adicionada: " + turma.toString());
+    }
+    
+    private static void editarTurma(BufferedReader reader, PrintWriter writer) throws IOException{
+        String codigo = reader.readLine();
+        String descricao = reader.readLine();
+        
+        Turma turma = buscarTurmaPeloCodigo(Integer.parseInt(codigo));
+        if (turma == null){
+            writer.println("Turma não encontrada!");
+        }else{
+            turma.setDescricao(descricao);       
+            writer.println("Turma atualizada com sucesso!");
+        }
+    }
+    
+    private static void buscarTurma(BufferedReader reader, PrintWriter writer) throws IOException{
+        String codigo = reader.readLine();
+        
+        Turma turma = buscarTurmaPeloCodigo(Integer.parseInt(codigo));
+        if (turma == null){
+            writer.println("Turma não encontrada!");
+        }else{
+            writer.println(turma.toString());
+        }
+    }
+    
+    private static void removerTurma(BufferedReader reader, PrintWriter writer) throws IOException{
+        String codigo = reader.readLine();
+        
+        Turma turma = buscarTurmaPeloCodigo(Integer.parseInt(codigo));
+        if (turma == null){
+            writer.println("Turma não encontrada!");
+        }else{
+            turmas.remove(turma);
+            writer.println("Turma removida com sucesso!");
+        }
+    }
+    
+    private static void buscarTodasTurma(PrintWriter writer) throws IOException{
+        for (Turma turma : turmas){
+            writer.println(turma.toString());
+        }
+    }
+    
+    private static void adicionarPessoaTurma(BufferedReader reader, PrintWriter writer) throws IOException{
+        String codigo = reader.readLine();
+        String cpf = reader.readLine();
+        
+        Turma turma = buscarTurmaPeloCodigo(Integer.parseInt(codigo));
+        Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
+        
+        if (turma == null){
+            writer.println("Turma não encontrada!");
+        }
+        
+        if (pessoa == null){
+            writer.println("Pessoa não encontrada!");
+        }else{
+            turma.addPessoa(pessoa);
+            writer.println("Pessoa adicionada a turma com sucesso!");
+        }
+    }
+    
+    private static void removerPessoaTurma(BufferedReader reader, PrintWriter writer) throws IOException{
+        String codigo = reader.readLine();
+        String cpf = reader.readLine();
+        
+        Turma turma = buscarTurmaPeloCodigo(Integer.parseInt(codigo));
+        Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
+        
+        if (turma == null){
+            writer.println("Turma não encontrada!");
+        }
+        
+        if (pessoa == null){
+            writer.println("Pessoa não encontrada!");
+        }else{
+            turma.removePessoa(pessoa);
+            writer.println("Pessoa adicionada a turma com sucesso!");
+        }
+    }
+    
+    private static Turma buscarTurmaPeloCodigo(int codigo) {
+        for (Turma turma : turmas) {
+            if (turma.getCodigo() == codigo) {
+                return turma;
             }
         }
         return null;
