@@ -59,6 +59,6 @@ public class Turma {
 
     @Override
     public String toString() {
-        return "Turma{" + "codigo=" + codigo + ", descricao=" + descricao + ", pessoas=" + pessoas + '}';
+        return codigo + " - " + descricao + " - " + pessoas;
     }
 }

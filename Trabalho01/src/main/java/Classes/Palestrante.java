@@ -19,6 +19,6 @@ public class Palestrante extends Pessoa{
 
     @Override
     public String toString() {
-        return "Palestrante{" + "titulo=" + titulo + '}';
+        return super.toString() + " - " + titulo;
     }
 }

@@ -137,7 +137,7 @@ public class Server {
 
         Pessoa pessoa = encontrarPessoaPeloCpf(cpf);
         if (pessoa != null) {
-            writer.println(pessoa.getCpf() + ";" + pessoa.getNome() + ";" + pessoa.getEndereco());
+            writer.println(pessoa.getCpf() + " - " + pessoa.getNome() + " - " + pessoa.getEndereco());
             System.out.println("Dados da pessoa enviados: " + pessoa);
         } else {
             writer.println("Pessoa não encontrada");
@@ -176,7 +176,7 @@ public class Server {
         writer.println(pessoas.size());
 
         for (Pessoa pessoa : pessoas) {
-            writer.println(pessoa.getCpf() + ";" + pessoa.getNome() + ";" + pessoa.getEndereco());
+            writer.println(pessoa.getCpf() + " - " + pessoa.getNome() + " - " + pessoa.getEndereco());
             System.out.println("Enviando dados: " + pessoa);
         }
     }

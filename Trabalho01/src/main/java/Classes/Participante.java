@@ -40,6 +40,6 @@ public class Participante extends Pessoa{
 
     @Override
     public String toString() {
-        return "Participante{" + "inscricao=" + inscricao + ", valorContribuicao=" + valorContribuicao + '}';
+        return super.toString() + " - " + inscricao + " - " + valorContribuicao;
     }
 }

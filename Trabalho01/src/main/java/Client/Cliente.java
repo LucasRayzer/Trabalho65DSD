@@ -5,43 +5,39 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.swing.JOptionPane;
 
 public class Cliente {
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));) {
-            System.out.println("Informe o endereço do servidor");
-            String ipServidor = reader.readLine();
-
+            String ipServidor = JOptionPane.showInputDialog("Informe o endereço do servidor:", "10.15.120.65");
+           
             while (true) {
-                System.out.println("Escolha a operação:");
+                String choiceStr = JOptionPane.showInputDialog("Escolha a operação: \n"
+                        + "1: Inserir dados de pessoa\n"
+                        + "2: Atualizar dados de pessoa\n"
+                        + "3: Obter dados de pessoa\n"
+                        + "4:Remover pessoa\n"
+                        + "5: Listar todas as pessoas\n"
+                        + "6: Criar nova turma\n"
+                        + "7: Atualizar dados de turma\n"
+                        + "8: Obter dados de turma\n"
+                        + "9: Remover turma\n"
+                        + "10: Retornar todas as turma\n"
+                        + "11: Adicionar participante a turma\n"
+                        + "12: Remover participante da turma");
 
-                System.out.println("1: Inserir dados de pessoa");
-                System.out.println("2: Atualizar dados de pessoa");
-                System.out.println("3: Obter dados de pessoa");
-                System.out.println("4: Remover pessoa");
-                System.out.println("5: Listar todas as pessoas");
-                System.out.println("6: Criar nova turma");
-                System.out.println("7: Atualizar dados de turma");
-                System.out.println("8: Obter dados de turma");
-                System.out.println("9: Remover turma");
-                System.out.println("10: Retornar todas as turma");
-                System.out.println("11: Adicionar participante a turma");
-                System.out.println("12: Remover participante da turma");
-                
-                String choiceStr = reader.readLine();
                 if (choiceStr.isBlank()) {
-                    System.out.println("Opção inválida");
+                    JOptionPane.showMessageDialog(null, "Opção inválida");
                     continue;
                 }
-
-                int choice = Integer.parseInt(choiceStr);
-
+                
                 Socket socket = new Socket(ipServidor, 80);
                 BufferedReader server = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-
-                System.out.println("Conectado ao servidor.");
+                
+                int choice = Integer.parseInt(choiceStr);
 
                 switch (choice) {
                     case 1 ->
@@ -59,9 +55,9 @@ public class Cliente {
                     case 7 ->
                         editarTurma(server, reader, writer);
                     case 8 ->
-                        buscarTurma(server, reader, writer); 
+                        buscarTurma(server, reader, writer);
                     case 9 ->
-                        removerTurma(server, reader, writer);  
+                        removerTurma(server, reader, writer);
                     case 10 ->
                         buscarTodasTurma(server, writer);
                     case 11 ->
@@ -69,10 +65,10 @@ public class Cliente {
                     case 12 ->
                         removerPessoaTurma(server, reader, writer);
                     default ->
-                        System.out.println("Opção inválida");
+                        JOptionPane.showMessageDialog(null, "Opção inválida");
                 }
-
                 socket.close();
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,183 +81,163 @@ public class Cliente {
         boolean continuar = true;
         String escolha = "";
         while (continuar) {
-            System.out.println("1: Criar partipante\n2: Criar palestrante");
-            escolha = reader.readLine();
+            escolha = JOptionPane.showInputDialog("1: Criar partipante\n2: Criar palestrante");
             if (escolha.equals("1") || escolha.endsWith("2")) {
                 continuar = false;
                 writer.println(escolha);
-            }else{
-                System.out.println("Escolha uma das opções cadastradas.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Escolha uma das opções cadastradas.");
             }
         }
-        
-        System.out.println("Insira o CPF");
-        String cpf = reader.readLine();
-        writer.println(cpf);
 
-        System.out.println("Insira o nome");
-        String nome = reader.readLine();
+        String cpf = JOptionPane.showInputDialog("Insira o CPF");
+        writer.println(cpf);
+        
+        String nome = JOptionPane.showInputDialog("Insira o nome");
         writer.println(nome);
 
-        System.out.println("Insira o endereço");
-        String endereco = reader.readLine();
+        String endereco = JOptionPane.showInputDialog("Insira o endereço");
         writer.println(endereco);
 
         if (escolha.equals("1")) {
-            System.out.println("Entre com o valor da contribuição");
-            String valorContribuição = reader.readLine();
+            String valorContribuição = JOptionPane.showInputDialog("Entre com o valor da contribuição");
             writer.println(valorContribuição);
         } else {
-            System.out.println("Entre com o título da palestra");
-            String titulo = reader.readLine();
+            String titulo = JOptionPane.showInputDialog("Entre com o título da palestra");
             writer.println(titulo);
         }
 
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
 
     public static void atualizarPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("UPDATE_PESSOA");
 
-        System.out.println("Insira o CPF da pessoa que deseja atualizar:");
-        String cpf = reader.readLine();
+        String cpf = JOptionPane.showInputDialog("Insira o CPF da pessoa que deseja atualizar:");
         writer.println(cpf);
 
-        System.out.println("Insira o novo nome:");
-        String nome = reader.readLine();
+        String nome = JOptionPane.showInputDialog("Insira o novo nome:");
         writer.println(nome);
 
-        System.out.println("Insira o novo endereço:");
-        String endereco = reader.readLine();
+        String endereco = JOptionPane.showInputDialog("Insira o novo endereço:");
         writer.println(endereco);
 
-        //Aqui é onde vai vir a resposta do servidor
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
 
     public static void obterPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("GET_PESSOA");
-
-        System.out.println("Insira o CPF da pessoa que deseja obter os dados:");
-        String cpf = reader.readLine();
+        
+        String cpf = JOptionPane.showInputDialog("Insira o CPF da pessoa que deseja obter os dados:");
         writer.println(cpf);
 
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
 
     public static void removerPessoa(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("DELETE_PESSOA");
 
-        System.out.println("Insira o CPF da pessoa que deseja remover:");
-        String cpf = reader.readLine();
+        String cpf = JOptionPane.showInputDialog("Insira o CPF da pessoa que deseja remover:");
         writer.println(cpf);
 
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
 
     public static void listarPessoas(BufferedReader server, PrintWriter writer) throws IOException {
         writer.println("LIST_PESSOA");
-        //quantidade de registros
         String response = server.readLine();
         int quantidade = Integer.parseInt(response);
 
         if (quantidade == 0) {
-            System.out.println("Nenhuma pessoa cadastrada.");
+            JOptionPane.showMessageDialog(null, "Nenhuma pessoa cadastrada.");
         } else {
-            System.out.println("Quantidade de registros: " + quantidade);
+            JOptionPane.showMessageDialog(null, "Quantidade de registros: " + quantidade);
+            String pessoas = "";
             for (int i = 0; i < quantidade; i++) {
                 String pessoa = server.readLine();
-                System.out.println(pessoa);
+                pessoas += pessoa + "\n";
             }
+            JOptionPane.showMessageDialog(null, pessoas);
         }
     }
-    
-    public static void adicionarTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+
+    public static void adicionarTurma(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("INSERT_TURMA");
 
-        System.out.println("Entre com a descrição da turma");
-        String descricao = reader.readLine();
+        String descricao = JOptionPane.showInputDialog("Entre com a descrição da turma");
         writer.println(descricao);
-        
-        String response = server.readLine();
-        System.out.println(response);
-    }
-    
-    public static void removerTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
-        writer.println("DELETE_TURMA");
 
-        System.out.println("Entre com o código da turma");
-        String codigo = reader.readLine();
-        writer.println(codigo);
-        
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
-    
-    public static void editarTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+
+    public static void removerTurma(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+        writer.println("DELETE_TURMA");
+       
+        String codigo = JOptionPane.showInputDialog("Entre com o código da turma");
+        writer.println(codigo);
+
+        String response = server.readLine();
+        JOptionPane.showMessageDialog(null, response);
+    }
+
+    public static void editarTurma(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("UPDATE_TURMA");
 
-        System.out.println("Entre com o código da turma");
-        String codigo = reader.readLine();
+        String codigo = JOptionPane.showInputDialog("Entre com o código da turma");
         writer.println(codigo);
         
-        System.out.println("Atualize a descrição da turma");
-        String descricao = reader.readLine();
+        String descricao = JOptionPane.showInputDialog("Atualize a descrição da turma");
         writer.println(descricao);
-        
+
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
-    
-    public static void buscarTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+
+    public static void buscarTurma(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("GET_TURMA");
 
-        System.out.println("Entre com o código da turma");
-        String codigo = reader.readLine();
+        String codigo = JOptionPane.showInputDialog("Entre com o código da turma");
         writer.println(codigo);
 
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
-    
-    public static void buscarTodasTurma( BufferedReader server, PrintWriter writer) throws IOException {
+
+    public static void buscarTodasTurma(BufferedReader server, PrintWriter writer) throws IOException {
         writer.println("LIST_TURMA");
-        
+
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
-    
-    public static void adicionarPessoaTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+
+    public static void adicionarPessoaTurma(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("INSERT_PESSOA_TURMA");
-        
-        System.out.println("Entre com o código da turma");
-        String codigo = reader.readLine();
+
+        String codigo = JOptionPane.showInputDialog("Entre com o código da turma");
         writer.println(codigo);
-        
-        System.out.println("Entre com o CPF da pessoa");
-        String cpf = reader.readLine();
+
+        String cpf = JOptionPane.showInputDialog("Entre com o CPF da pessoa");
         writer.println(cpf);
-        
+
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
-    
-    public static void removerPessoaTurma( BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
+
+    public static void removerPessoaTurma(BufferedReader server, BufferedReader reader, PrintWriter writer) throws IOException {
         writer.println("REMOVE_PESSOA_TURMA");
-        
-        System.out.println("Entre com o código da turma");
-        String codigo = reader.readLine();
+
+        String codigo = JOptionPane.showInputDialog("Entre com o código da turma");
         writer.println(codigo);
         
-        System.out.println("Entre com o CPF da pessoa");
-        String cpf = reader.readLine();
+        String cpf = JOptionPane.showInputDialog("Entre com o CPF da pessoa");
         writer.println(cpf);
-        
+
         String response = server.readLine();
-        System.out.println(response);
+        JOptionPane.showMessageDialog(null, response);
     }
 }

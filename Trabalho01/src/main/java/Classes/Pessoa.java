@@ -38,6 +38,6 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" + "cpf=" + cpf + ", nome=" + nome + ", endereco=" + endereco + '}';
+        return cpf + " - " + nome + " - " + endereco;
     }
 }
