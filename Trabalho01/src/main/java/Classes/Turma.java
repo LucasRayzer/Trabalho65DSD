@@ -1,15 +1,28 @@
 package Classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Turma {
     
+    private static int inscricaoCounter = 1;
     private int codigo;
     private String descricao;
     private List<Pessoa> pessoas; 
 
     public Turma(String descricao) {
         this.descricao = descricao;
+        pessoas = new ArrayList<>();
+        this.codigo = inscricaoCounter++;
+
+    }
+    
+    public static int getInscricaoCounter() {
+        return inscricaoCounter;
+    }
+
+    public static void setInscricaoCounter(int inscricaoCounter) {
+        Turma.inscricaoCounter = inscricaoCounter;
     }
     
     public void addPessoa(Pessoa p){

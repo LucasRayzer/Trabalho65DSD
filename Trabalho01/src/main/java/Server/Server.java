@@ -50,7 +50,7 @@ public class Server {
                                 editarTurma(reader, writer);
                             case "GET_TURMA" ->
                                 buscarTurma(reader, writer);
-                            case "REMOVE_TURMA" ->
+                            case "DELETE_TURMA" ->
                                 removerTurma(reader, writer);
                             case "LIST_TURMA" ->
                                 buscarTodasTurma(writer);
@@ -240,6 +240,10 @@ public class Server {
         for (Turma turma : turmas){
             writer.println(turma.toString());
         }
+        
+        if (turmas.isEmpty()){
+            writer.println("Nenhuma turma cadastrada!");
+        }
     }
     
     private static void adicionarPessoaTurma(BufferedReader reader, PrintWriter writer) throws IOException{
@@ -276,7 +280,7 @@ public class Server {
             writer.println("Pessoa não encontrada!");
         }else{
             turma.removePessoa(pessoa);
-            writer.println("Pessoa adicionada a turma com sucesso!");
+            writer.println("Pessoa removida da turma com sucesso!");
         }
     }
     
