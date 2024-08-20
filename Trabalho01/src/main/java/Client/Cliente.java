@@ -100,8 +100,8 @@ public class Cliente {
         writer.println(endereco);
 
         if (escolha.equals("1")) {
-            String valorContribuição = JOptionPane.showInputDialog("Entre com o valor da contribuição");
-            writer.println(valorContribuição);
+            String valorContribuicao = JOptionPane.showInputDialog("Entre com o valor da contribuição");
+            writer.println(valorContribuicao);
         } else {
             String titulo = JOptionPane.showInputDialog("Entre com o título da palestra");
             writer.println(titulo);
