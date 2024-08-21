@@ -1,4 +1,4 @@
-package trabalho;
+package trabalho01;
 
 import java.io.BufferedReader;
 import java.io.IOException;

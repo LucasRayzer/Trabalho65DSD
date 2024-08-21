@@ -1,4 +1,4 @@
-package trabalho.classes;
+package trabalho01.classes;
 
 public class Pessoa {
     
