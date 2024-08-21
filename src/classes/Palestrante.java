@@ -1,4 +1,4 @@
-package trabalho1.classes;
+package trabalho.classes;
 
 public class Palestrante extends Pessoa{
     

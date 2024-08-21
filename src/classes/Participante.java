@@ -1,5 +1,5 @@
 
-package trabalho1.classes;
+package trabalho.classes;
 
 public class Participante extends Pessoa{
     
