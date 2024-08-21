@@ -1,4 +1,4 @@
-package trabalho.classes;
+package Classes;
 
 public class Palestrante extends Pessoa{
     
@@ -19,6 +19,6 @@ public class Palestrante extends Pessoa{
 
     @Override
     public String toString() {
-        return  "Palestrante - " + super.toString() + " - " + titulo;
+        return super.toString() + " - " + titulo;
     }
 }

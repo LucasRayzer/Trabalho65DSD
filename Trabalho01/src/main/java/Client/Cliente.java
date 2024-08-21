@@ -1,4 +1,4 @@
-package trabalho;
+package Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -155,12 +155,13 @@ public class Cliente {
         if (quantidade == 0) {
             JOptionPane.showMessageDialog(null, "Nenhuma pessoa cadastrada.");
         } else {
+            JOptionPane.showMessageDialog(null, "Quantidade de registros: " + quantidade);
             String pessoas = "";
             for (int i = 0; i < quantidade; i++) {
                 String pessoa = server.readLine();
                 pessoas += pessoa + "\n";
             }
-            JOptionPane.showMessageDialog(null, "Quantidade de registros: " + quantidade + "\n" + pessoas);
+            JOptionPane.showMessageDialog(null, pessoas);
         }
     }
 
