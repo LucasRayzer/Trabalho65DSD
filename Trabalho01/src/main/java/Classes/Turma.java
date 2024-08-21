@@ -1,4 +1,4 @@
-package Classes;
+package trabalho.classes;
 
 import java.util.ArrayList;
 import java.util.List;

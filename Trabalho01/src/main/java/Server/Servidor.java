@@ -1,10 +1,9 @@
-package Server;
+package trabalho;
 
-import Classes.Pessoa;
-import Classes.Participante;
-import Classes.Palestrante;
-import Classes.Turma;
-
+import trabalho.classes.Pessoa;
+import trabalho.classes.Turma;
+import trabalho.classes.Palestrante;
+import trabalho.classes.Participante;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,7 +13,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server {
+public class Servidor {
 
     private static List<Pessoa> pessoas = new ArrayList<>();
     private static List<Turma> turmas = new ArrayList<>();

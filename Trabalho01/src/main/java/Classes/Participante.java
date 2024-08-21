@@ -1,5 +1,5 @@
 
-package Classes;
+package trabalho.classes;
 
 public class Participante extends Pessoa{
     
@@ -40,6 +40,6 @@ public class Participante extends Pessoa{
 
     @Override
     public String toString() {
-        return super.toString() + " - " + inscricao + " - " + valorContribuicao;
+        return "Participante - " + super.toString() + " - " + inscricao + " - " + valorContribuicao;
     }
 }
