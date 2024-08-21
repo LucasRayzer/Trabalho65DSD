@@ -35,7 +35,7 @@ public class Cliente {
                         + "7: Atualizar dados de turma\n"
                         + "8: Obter dados de turma\n"
                         + "9: Remover turma\n"
-                        + "10: Retornar todas as turma\n"
+                        + "10: Retornar todas as turmas\n"
                         + "11: Adicionar participante a turma\n"
                         + "12: Remover participante da turma");
 

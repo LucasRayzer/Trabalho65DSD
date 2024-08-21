@@ -222,14 +222,15 @@ public class Server {
         }
     }
     
-    private static void buscarTodasTurma(PrintWriter writer) throws IOException{
-        for (Turma turma : turmas){
-            writer.println(turma.toString());
-        }
-        
+   private static void buscarTodasTurma(PrintWriter writer) throws IOException{
         if (turmas.isEmpty()){
             writer.println("Nenhuma turma cadastrada!");
         }
+        String retorno = "";
+        for (Turma turma : turmas){
+            retorno += turma.toString();
+        }
+        writer.println(retorno);
     }
     
     private static void adicionarPessoaTurma(BufferedReader reader, PrintWriter writer) throws IOException{
